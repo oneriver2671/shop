@@ -23,7 +23,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Main></Main>} />
-        <Route path="/detail" element={<Detail></Detail>} />
+        <Route path="/detail/:id" element={<Detail></Detail>} />
 
         {/**nested routes 과제 */}
         <Route path="/event" element={<Event />}>
