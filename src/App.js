@@ -5,8 +5,13 @@ import { Button, Container, Nav, Navbar, Row, Col } from 'react-bootstrap';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import Detail from './routes/Detail.js';
 import Main from './routes/Main.js';
+import data from './data.js';
 
 function App() {
+
+   // Main.js에서 shoesArr 상태를 관리하고 싶었으나, Route를 통해 detail페이지로도 상태가 이동해야 해서 실패.
+  let [shoesArr, setShoesArr] = useState(data);   // App -> Detail로 전송
+  let navigate = useNavigate();
 
   return (
     <div className="App">
@@ -22,8 +27,8 @@ function App() {
       </Navbar>
 
       <Routes>
-        <Route path="/" element={<Main></Main>} />
-        <Route path="/detail/:id" element={<Detail></Detail>} />
+        <Route path="/" element={<Main shoesArr={shoesArr}></Main>} />
+        <Route path="/detail/:id" element={<Detail shoesArr={shoesArr}></Detail>} />  {/**애초에 넘길 때 배열이 아니라, 1개만 넘기진 못하나? */}
 
         {/**nested routes 과제 */}
         <Route path="/event" element={<Event />}>
