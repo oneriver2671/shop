@@ -1,4 +1,15 @@
 import { useLocation, useParams } from "react-router-dom";
+import styled from "styled-components";
+
+let YellowBtn = styled.button`
+  background: ${ props => props.bg };
+  color: ${ props => props.bg == 'blue' ? 'white' : 'black' };
+  padding: 10px;
+`
+let Box = styled.div`
+  background: grey;
+  padding: 20px;
+`
 
 // 상세페이지 컴포넌트
 function Detail(props){
@@ -6,12 +17,17 @@ function Detail(props){
   // 라우터의 파라미터를 가져옴
   let {id} = useParams();
 
-
   // find() 함수: 배열에서 특정 조건의 값을 가진 요소가 있을 때, 그 배열에서 첫번째로 일치하는 값을 리턴.
   // 넘어온 param값으로 바로 바인딩하면 배열의 순서에 따라 바인딩하는 것이 되어버림.
   // 그거말고 data 안에 있는 고유의 id로 바인딩해야 함.
   const shoes = props.shoesArr.find(element => element.id == id);
 
+  // 예외처리: 잘못된 파라미터로 넘어온 상황
+  if(!shoes){
+    return(
+      <div>존재하지 않는 페이지입니다. 404에러.</div>
+    )
+  }
 
   /* Main.js에서 shoesArr 상태관리 했을 때 썼던 방법. 지금은 App.js로 옮김 */
   // 1. useLocation() 훅 취득
@@ -22,6 +38,8 @@ function Detail(props){
 
   return(
    <div className="container">
+      <YellowBtn bg="blue">파랑 버튼</YellowBtn>
+      <YellowBtn bg="orange">오렌지 버튼</YellowBtn>
     <div className="row">
       <div className="col-md-6">
         <img src={ shoes.imageSrc } width="100%" />
