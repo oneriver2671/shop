@@ -1,18 +1,18 @@
+import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 
-let YellowBtn = styled.button`
-  background: ${ props => props.bg };
-  color: ${ props => props.bg == 'blue' ? 'white' : 'black' };
-  padding: 10px;
-`
-let Box = styled.div`
-  background: grey;
-  padding: 20px;
-`
+
 
 // 상세페이지 컴포넌트
 function Detail(props){
+
+  // mount, update 시 useEffect 안의 코드가 실행됨.
+  useEffect(()=>{
+    console.log("안녕")
+  })
+
+  let [count, setCount] = useState(0);
 
   // 라우터의 파라미터를 가져옴
   let {id} = useParams();
@@ -38,8 +38,8 @@ function Detail(props){
 
   return(
    <div className="container">
-      <YellowBtn bg="blue">파랑 버튼</YellowBtn>
-      <YellowBtn bg="orange">오렌지 버튼</YellowBtn>
+    {count}
+    <button onClick={()=>{ setCount(count+1) }}>버튼</button>
     <div className="row">
       <div className="col-md-6">
         <img src={ shoes.imageSrc } width="100%" />
