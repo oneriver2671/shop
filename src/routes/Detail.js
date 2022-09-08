@@ -7,15 +7,18 @@ import styled from "styled-components";
 // 상세페이지 컴포넌트
 function Detail(props){
 
+  let [isVisible, setIsVisible] = useState(true);
+  let [count, setCount] = useState(0);
+  let {id} = useParams();   // 라우터의 파라미터를 가져옴
+ 
+
   // mount, update 시 useEffect 안의 코드가 실행됨.
   useEffect(()=>{
-    console.log("안녕")
+      // 2초 후에 실행할 코드
+      setTimeout(() => {
+      setIsVisible(false);
+    }, 2000)
   })
-
-  let [count, setCount] = useState(0);
-
-  // 라우터의 파라미터를 가져옴
-  let {id} = useParams();
 
   // find() 함수: 배열에서 특정 조건의 값을 가진 요소가 있을 때, 그 배열에서 첫번째로 일치하는 값을 리턴.
   // 넘어온 param값으로 바로 바인딩하면 배열의 순서에 따라 바인딩하는 것이 되어버림.
@@ -36,10 +39,21 @@ function Detail(props){
   // 2. location.state에서 파라미터 취득
   // const shoes = location.state;
 
+
+  // 2초 뒤에 사라지는 컴포넌트
+  function DiscountBar(){
+    return(
+      <div className="alert alert-warning">
+      2초 이내 구매 시 할인
+      </div>
+    )
+  }
+
   return(
    <div className="container">
-    {count}
-    <button onClick={()=>{ setCount(count+1) }}>버튼</button>
+
+    { isVisible ?  <DiscountBar /> : null }
+
     <div className="row">
       <div className="col-md-6">
         <img src={ shoes.imageSrc } width="100%" />
