@@ -1,11 +1,11 @@
-import './App.css';
-import { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Container, Nav, Navbar, Row, Col } from 'react-bootstrap';
-import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
-import Detail from './routes/Detail.js';
-import Main from './routes/Main.js';
-import data from './data.js';
+import './App.css'
+import { useState } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Button, Container, Nav, Navbar, Row, Col } from 'react-bootstrap'
+import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
+import Detail from './routes/Detail.js'
+import Main from './routes/Main.js'
+import data from './data.js'
 
 function App() {
 
@@ -27,7 +27,8 @@ function App() {
       </Navbar>
 
       <Routes>
-        <Route path="/" element={<Main shoesArr={shoesArr}></Main>} />
+        {/**setShoesArr: 자식->부모 컴포넌트 data 전송을 위해 setter함수를 보냄 */}
+        <Route path="/" element={<Main shoesArr={shoesArr} setShoesArr={setShoesArr}></Main>} />
         <Route path="/detail/:id" element={<Detail shoesArr={shoesArr}></Detail>} />  {/**애초에 넘길 때 배열이 아니라, 1개만 넘기진 못하나? */}
 
         {/**nested routes 과제 */}
