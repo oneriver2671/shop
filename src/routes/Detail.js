@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
-
-
+import { Col, Nav } from 'react-bootstrap';
 
 // 상세페이지 컴포넌트
 function Detail(props){
@@ -10,7 +9,7 @@ function Detail(props){
   let [isVisible, setIsVisible] = useState(true);
   let [count, setCount] = useState(0);
   let {id} = useParams();   // 라우터의 파라미터를 가져옴
- 
+  let [tabNum, setTabNum] = useState(0);
 
   // mount, update 시 useEffect 안의 코드가 실행됨.
   useEffect(()=>{
@@ -65,8 +64,39 @@ function Detail(props){
         <button className="btn btn-danger">주문하기</button>
       </div>
     </div>
-   </div>
+
+    {/**defaultActiveKey: 초기값 세팅 */}
+    <Nav variant="tabs" defaultActiveKey="link0">
+        <Nav.Item>
+          <Nav.Link eventKey="link0" onClick={()=>{setTabNum(0)}}>탭1</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="link1" onClick={()=>{setTabNum(1)}}>탭2</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="link2" onClick={()=>{setTabNum(2)}}>탭3</Nav.Link>
+        </Nav.Item>
+    </Nav>
+
+    <TabContent tabNum={tabNum}></TabContent>
+
+  </div>
+   
   )
 }
+
+/**탭 컴포넌트 */
+function TabContent(props){
+  if (props.tabNum == 0){
+    return (<div>내용0</div>)
+  }
+  else if (props.tabNum == 1){
+    return (<div>내용1</div>)
+  }
+  else if (props.tabNum == 2){
+    return (<div>내용2</div>)
+  }
+}
+  
 
 export default Detail;
