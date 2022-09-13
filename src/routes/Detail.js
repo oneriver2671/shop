@@ -1,10 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Col, Nav } from 'react-bootstrap';
+import {Context1} from '../App.js';
 
 // 상세페이지 컴포넌트
 function Detail(props){
+
+  // Context 사용하기
+  let {재고} = useContext(Context1);
+  console.log({재고});
 
   let [isVisible, setIsVisible] = useState(true);
   let [count, setCount] = useState(0);
@@ -68,35 +73,54 @@ function Detail(props){
     {/**defaultActiveKey: 초기값 세팅 */}
     <Nav variant="tabs" defaultActiveKey="link0">
         <Nav.Item>
-          <Nav.Link eventKey="link0" onClick={()=>{setTabNum(0)}}>탭1</Nav.Link>
+          <Nav.Link eventKey="link0" onClick={()=>{setTabNum(0)}}>상세설명</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="link1" onClick={()=>{setTabNum(1)}}>탭2</Nav.Link>
+          <Nav.Link eventKey="link1" onClick={()=>{setTabNum(1)}}>상품후기</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="link2" onClick={()=>{setTabNum(2)}}>탭3</Nav.Link>
+          <Nav.Link eventKey="link2" onClick={()=>{setTabNum(2)}}>자주하는 질문</Nav.Link>
         </Nav.Item>
     </Nav>
 
-    <TabContent tabNum={tabNum}></TabContent>
-
+    <div>
+      <TabContent tabNum={tabNum}></TabContent>
+    </div>
+    
   </div>
-   
   )
 }
 
 /**탭 컴포넌트 */
 function TabContent(props){
+
+  // Context 사용하기
+  let {재고} = useContext(Context1);
+  console.log({재고});
+
+  // tab state가 변할 때 end를 부착
+  let [fade, setFade] = useState('');
+
+  // props.tabNum의 변화 감지
+  // fade라는 state가 'end'로 변경됨
+  useEffect(()=>{
+    setFade('end');
+    
+    return()=>{ 
+      setFade(''); 
+    }
+  }, [props.tabNum])
+
+
   if (props.tabNum == 0){
-    return (<div>내용0</div>)
+    return (<div className={'start ' + fade}>상세설명입니다.</div>)
   }
   else if (props.tabNum == 1){
-    return (<div>내용1</div>)
+    return (<div className={'start ' + fade}>상품후기 불라불라 너무 좋아요~~</div>)
   }
   else if (props.tabNum == 2){
-    return (<div>내용2</div>)
+    return (<div className={'start ' + fade}>이것이 궁금합니다.</div>)
   }
 }
-  
 
 export default Detail;
