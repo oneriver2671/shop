@@ -104,7 +104,7 @@ function TabContent(props){
   // props.tabNum의 변화 감지
   // fade라는 state가 'end'로 변경됨
   useEffect(()=>{
-    setFade('end');
+    setFade('end'); 
     
     return()=>{ 
       setFade(''); 

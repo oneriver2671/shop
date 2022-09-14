@@ -6,6 +6,7 @@ import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import Detail from './routes/Detail.js'
 import Main from './routes/Main.js'
 import data from './data.js'
+import Cart from './routes/Cart'
 
 // Context API 사용해보기
 export let Context1 = createContext();
@@ -47,6 +48,9 @@ function App() {
           <Route path="one" element={<div>첫 주문 시 양배추즙 서비스</div>}></Route>
           <Route path="two" element={<div>생일기념 쿠폰 받기!</div>}></Route>
         </Route>
+
+        {/**장바구니 */}
+        <Route path="/cart" element={<Cart></Cart>} />
 
         <Route path="*" element={<div>존재하지 않는 페이지입니다. 404에러.</div>}></Route>
       </Routes>
