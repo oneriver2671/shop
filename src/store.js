@@ -1,11 +1,6 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
+import user from './store/userSlice.js';
 
-
-// useState() 역할과 비슷. state 하나를 slice라고 부름.
-let user = createSlice({
-  name: 'user',
-  initialState: 'jang'
-})
 
 let stock = createSlice({
   name: 'stock',
@@ -16,9 +11,20 @@ let stock = createSlice({
 let _userStoreArr = [{id : 0, name : 'White and Black', count : 2}, {id : 2, name : 'Grey Yordan', count : 1}]; 
 let userStoreArr = createSlice({
   name: 'userStoreArr',
-  initialState: _userStoreArr
+  initialState: _userStoreArr,
+  reducers: {
+    addCount(state, id){
+      state.forEach(item => {
+        if(item.id == id.payload){
+          
+          item.count += 1;
+        }
+      })
+    }
+  }
 })
 
+export let { addCount } = userStoreArr.actions;
 
 export default configureStore({
   reducer: {
