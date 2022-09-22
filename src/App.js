@@ -7,6 +7,8 @@ import Detail from './routes/Detail.js'
 import Main from './routes/Main.js'
 import data from './data.js'
 import Cart from './routes/Cart'
+import axios from 'axios'
+import { useQuery } from 'react-query'
 
 // Context API 사용해보기
 export let Context1 = createContext();
@@ -26,6 +28,14 @@ function App() {
   let [재고] = useState([10, 11, 12]);
 
 
+  let result = useQuery('작명', ()=>{
+    return axios.get('https://codingapple1.github.io/userdata.json')
+      .then((response)=>{
+        return response.data
+      })
+  })
+
+
   return (
     <div className="App">
       <Navbar bg="light" variant="light">
@@ -36,6 +46,10 @@ function App() {
             <Nav.Link href="/join">회원가입</Nav.Link>
             <Nav.Link href="/login">로그인</Nav.Link>
             <Nav.Link href="/cart">장바구니</Nav.Link>
+          </Nav>
+          <Nav className='ms-auto'>
+            { result.isLoading ? '로딩중' : '환영합니다, ' + result.data.name + '님!' }
+            { result.error && '에러남' }
           </Nav>
         </Container>
       </Navbar>
