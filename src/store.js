@@ -13,18 +13,20 @@ let userStoreArr = createSlice({
   name: 'userStoreArr',
   initialState: _userStoreArr,
   reducers: {
+    // 상품 갯수 추가 (cart 페이지)
     addCount(state, id){
-      state.forEach(item => {
-        if(item.id == id.payload){
-          
-          item.count += 1;
-        }
-      })
+      let index = state.findIndex(item => { return item.id === id.payload });
+      state[index].count += 1;
+    },
+    // 장바구니에 항목 추가 (detail 페이지 - 주문하기btn)
+    addItem(state, newItem){
+      state.push(newItem.payload);
+      alert('장바구니에 항목이 추가되었습니다.');
     }
   }
 })
 
-export let { addCount } = userStoreArr.actions;
+export let { addCount, addItem } = userStoreArr.actions;
 
 export default configureStore({
   reducer: {

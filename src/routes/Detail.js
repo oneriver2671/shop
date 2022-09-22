@@ -3,19 +3,22 @@ import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Col, Nav } from 'react-bootstrap';
 import {Context1} from '../App.js';
+import { useDispatch } from "react-redux";
+import { addItem } from '../store.js';
 
 // 상세페이지 컴포넌트
 function Detail(props){
 
   // Context 사용하기
   let {재고} = useContext(Context1);
-  console.log({재고});
 
   let [isVisible, setIsVisible] = useState(true);
   let [count, setCount] = useState(0);
   let {id} = useParams();   // 라우터의 파라미터를 가져옴
   let [tabNum, setTabNum] = useState(0);
 
+  let dispatch = useDispatch();
+ 
   // mount, update 시 useEffect 안의 코드가 실행됨.
   useEffect(()=>{
       // 2초 후에 실행할 코드
@@ -28,6 +31,9 @@ function Detail(props){
   // 넘어온 param값으로 바로 바인딩하면 배열의 순서에 따라 바인딩하는 것이 되어버림.
   // 그거말고 data 안에 있는 고유의 id로 바인딩해야 함.
   const shoes = props.shoesArr.find(element => element.id == id);
+
+  /** 장바구니로 이동되는 변수 */
+  const cartAddObj = { id: shoes.id, name: shoes.title, count: 1 };
 
   // 예외처리: 잘못된 파라미터로 넘어온 상황
   if(!shoes){
@@ -66,7 +72,9 @@ function Detail(props){
         <h4 className="pt-5">{ shoes.title }</h4>
         <p>{ shoes.detail }</p>
         <p>{ shoes.price }원</p>
-        <button className="btn btn-danger">주문하기</button>
+        <button className="btn btn-danger" onClick={()=>{
+          dispatch(addItem(cartAddObj))   
+        }}>주문하기</button>
       </div>
     </div>
 
@@ -96,7 +104,6 @@ function TabContent(props){
 
   // Context 사용하기
   let {재고} = useContext(Context1);
-  console.log({재고});
 
   // tab state가 변할 때 end를 부착
   let [fade, setFade] = useState('');

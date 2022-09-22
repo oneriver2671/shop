@@ -29,15 +29,15 @@ function Cart(){
         </thead>
         <tbody>
           { 
-            userStoreItemArr.map(item => {
+            userStoreItemArr.map((item, i) => {
               return (
-                <tr>
+                <tr key={i}>
                   <td>{item.id}</td>
                   <td>{item.name}</td>
                   <td>{item.count}</td>
                   <td>
-                      <button onClick={()=>{
-                        dispatch(addCount(item.id)) 
+                    <button onClick={()=>{
+                      dispatch(addCount(item.id)) 
                     }}>+</button>
                   </td>
                 </tr>

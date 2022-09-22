@@ -30,28 +30,30 @@ function App() {
             <Nav.Link href="/menu">메뉴</Nav.Link>
             <Nav.Link href="/join">회원가입</Nav.Link>
             <Nav.Link href="/login">로그인</Nav.Link>
+            <Nav.Link href="/cart">장바구니</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
 
       <Routes>
-        {/**setShoesArr: 자식->부모 컴포넌트 data 전송을 위해 setter함수를 보냄 */}
+        {/** setShoesArr: 자식->부모 컴포넌트 data 전송을 위해 setter함수를 보냄 */}
         <Route path="/" element={<Main shoesArr={shoesArr} setShoesArr={setShoesArr}></Main>} />
         <Route path="/detail/:id" element={
           <Context1.Provider value={{ 재고, shoesArr }}>
             <Detail shoesArr={shoesArr}></Detail>
           </Context1.Provider>
-        } />  {/**애초에 넘길 때 배열이 아니라, 1개만 넘기진 못하나? */}
+        } />  {/** TODO: 애초에 넘길 때 배열이 아니라, 1개만 넘기진 못하나? */}
 
-        {/**nested routes 과제 */}
+        {/** nested routes 과제 */}
         <Route path="/event" element={<Event />}>
           <Route path="one" element={<div>첫 주문 시 양배추즙 서비스</div>}></Route>
           <Route path="two" element={<div>생일기념 쿠폰 받기!</div>}></Route>
         </Route>
 
-        {/**장바구니 */}
+        {/** 장바구니 */}
         <Route path="/cart" element={<Cart></Cart>} />
 
+        {/** 예외처리 */}
         <Route path="*" element={<div>존재하지 않는 페이지입니다. 404에러.</div>}></Route>
       </Routes>
      

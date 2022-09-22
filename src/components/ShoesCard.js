@@ -2,6 +2,8 @@ import { Col } from 'react-bootstrap';
 import { Link, useNavigate, Outlet  } from 'react-router-dom';
 
 // 상품목록 컴포넌트
+
+
 function ShoesCard(props){
 
   let navigate = useNavigate();
