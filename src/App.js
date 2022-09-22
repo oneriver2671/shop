@@ -1,5 +1,5 @@
 import './App.css'
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Button, Container, Nav, Navbar, Row, Col } from 'react-bootstrap'
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
@@ -12,6 +12,11 @@ import Cart from './routes/Cart'
 export let Context1 = createContext();
 
 function App() {
+
+  /** 최초 접속 시, 봤던 게시물 저장할 배열 생성 */
+  useEffect(()=>{
+    localStorage.setItem('watched', JSON.stringify([]))
+  }, [])
 
    // Main.js에서 shoesArr 상태를 관리하고 싶었으나, Route를 통해 detail페이지로도 상태가 이동해야 해서 실패.
   let [shoesArr, setShoesArr] = useState(data);   // App -> Detail로 전송

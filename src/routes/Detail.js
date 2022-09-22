@@ -18,6 +18,14 @@ function Detail(props){
   let [tabNum, setTabNum] = useState(0);
 
   let dispatch = useDispatch();
+
+  // find() 함수: 배열에서 특정 조건의 값을 가진 요소가 있을 때, 그 배열에서 첫번째로 일치하는 값을 리턴.
+  // 넘어온 param값으로 바로 바인딩하면 배열의 순서에 따라 바인딩하는 것이 되어버림.
+  // 그거말고 data 안에 있는 고유의 id로 바인딩해야 함.
+  const shoes = props.shoesArr.find(element => element.id == id);
+
+  /** 장바구니로 이동되는 변수 */
+  const cartAddObj = { id: shoes.id, name: shoes.title, count: 1 };
  
   // mount, update 시 useEffect 안의 코드가 실행됨.
   useEffect(()=>{
@@ -27,13 +35,15 @@ function Detail(props){
     }, 2000)
   })
 
-  // find() 함수: 배열에서 특정 조건의 값을 가진 요소가 있을 때, 그 배열에서 첫번째로 일치하는 값을 리턴.
-  // 넘어온 param값으로 바로 바인딩하면 배열의 순서에 따라 바인딩하는 것이 되어버림.
-  // 그거말고 data 안에 있는 고유의 id로 바인딩해야 함.
-  const shoes = props.shoesArr.find(element => element.id == id);
-
-  /** 장바구니로 이동되는 변수 */
-  const cartAddObj = { id: shoes.id, name: shoes.title, count: 1 };
+  /** 최근 본 상품 localStorage에 저장하는 기능 */
+  useEffect(()=>{
+    let watchedItemArr = localStorage.getItem('watched');
+    watchedItemArr = JSON.parse(watchedItemArr);
+    watchedItemArr.push(shoes.id);
+    watchedItemArr = new Set(watchedItemArr);   // 중복 제거 목적
+    watchedItemArr = Array.from(watchedItemArr);
+    localStorage.setItem('watched', JSON.stringify(watchedItemArr));
+  })
 
   // 예외처리: 잘못된 파라미터로 넘어온 상황
   if(!shoes){
